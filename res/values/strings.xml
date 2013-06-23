@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ChatSimple</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_display_message">test</string>
+    <string name="edit_message">Enter a Message</string>
+    <string name="conn_et_srv_name">Server-Adresse</string>
+    <string name="conn_et_usr_name">Benutzername</string>
+    <string name="conn_et_srv_pass">Server-Passwort</string>
+    <string name="conn_et_proto_sep">Protokoll-Trenner</string>
+    <string name="conn_btn_connect">Verbinden</string>
+    <string name="title_activity_chat">ChatActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="chat_et_message">Deine Nachricht</string>
+    <string name="chat_btn_send">Senden</string>
+
+</resources>

@@ -1,0 +1,43 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/et_srv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/conn_et_srv_name"
+        android:ems="10" >
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/et_usr_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/conn_et_usr_name"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/et_srv_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/conn_et_srv_pass"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/et_proto_se"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/conn_et_proto_sep"
+        android:ems="10" />
+
+    <Button
+        android:id="@+id/btn_connect"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="connect"
+        android:text="@string/conn_btn_connect" />
+
+</LinearLayout>
