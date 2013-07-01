@@ -28,7 +28,6 @@ public class MainActivity extends Activity {
 			Intent intent = new Intent(this, ChatService.class);
 			startService(intent);
 		}
-			//Toast.makeText(this, "chatserivce started", Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
@@ -45,7 +44,19 @@ public class MainActivity extends Activity {
 		sinfo.delimiter = delim.equalsIgnoreCase("") ? "::" : delim;
 		ChatService.CHATSERVICE.client = new SimplifiedChatsimpleClient(sinfo, ChatService.CHATSERVICE);
 		SimplifiedChatsimpleClient client = ChatService.CHATSERVICE.client;
-		if(client.connect())
+		new ConnectTask().execute(client);
+		int i = 0;
+		while(!client.isConnected() && i < 100)
+		{
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			i++;
+		}
+		if(client.isConnected())
 		{
 			if(client.login())
 			{

@@ -2,7 +2,6 @@ package de.floriware.android.chatsimple;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
 import de.floriware.chatsimple.client.simplified.ISimplifiedConnectionHandler;
 import de.floriware.chatsimple.client.simplified.SimplifiedChatsimpleClient;
 import android.annotation.SuppressLint;

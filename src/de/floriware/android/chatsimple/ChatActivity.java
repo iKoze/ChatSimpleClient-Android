@@ -2,6 +2,7 @@ package de.floriware.android.chatsimple;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,7 @@ public class ChatActivity extends Activity {
 		CHATACTIVITY = this;
 		
 		tv_messages = (TextView) findViewById(R.id.tv_messages);
+		tv_messages.setMovementMethod(new ScrollingMovementMethod());
 		et_message = (EditText) findViewById(R.id.et_message);
 		btn_send = (Button) findViewById(R.id.btn_send);
 	}
