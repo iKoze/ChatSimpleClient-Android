@@ -18,11 +18,15 @@
         	android:layout_width="0dp"
         	android:layout_height="wrap_content"
         	android:hint="@string/chat_et_message"
-        	android:layout_weight="1" 
+        	android:layout_weight="1"
+        	android:lines="1"
+        	android:singleLine="true"
+        	android:imeActionId="1"
+        	android:imeOptions="actionDone|actionNext"
         />
        <Button android:id="@+id/btn_send"
            android:layout_width="wrap_content"
-           android:onClick="sendMessage"
+           android:onClick="e_send"
            android:layout_height="wrap_content"
            android:text="@string/chat_btn_send" />
     </LinearLayout>
