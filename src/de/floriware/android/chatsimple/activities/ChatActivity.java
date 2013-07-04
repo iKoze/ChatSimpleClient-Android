@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+//import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -22,6 +23,7 @@ public class ChatActivity extends Activity
 	public EditText et_message;
 	public Button btn_send;
 	public ScrollView sv_textscroller;
+	//public ListView lv_users;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -34,6 +36,7 @@ public class ChatActivity extends Activity
 		et_message = (EditText) findViewById(R.id.et_message);
 		btn_send = (Button) findViewById(R.id.btn_send);
 		sv_textscroller = (ScrollView) findViewById(R.id.sv_textscroller);
+		//lv_users = (ListView) findViewById(R.id.lv_users);
 		
 		Manager.getInstance().setChatActivity(this);
 		
