@@ -6,7 +6,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.widget.Toast;
 import de.floriware.android.chatsimple.activities.ChatActivity;
 import de.floriware.android.chatsimple.activities.ConnectActivity;
 import de.floriware.android.chatsimple.activities.IChatActivity;
@@ -22,9 +21,19 @@ public class Worker implements IChatActivity, IConnectActivity, ISimplifiedConne
 	private SimplifiedChatsimpleClient client = null;
 	private String chat_history = "";
 	
+	public Worker()
+	{
+		client = new SimplifiedChatsimpleClient(this);
+	}
+	
 	public String getChatHistory()
 	{
 		return chat_history;
+	}
+	
+	public SimplifiedChatsimpleClient getClient()
+	{
+		return client;
 	}
 	
 	private void chatUpdate(String message)
@@ -34,7 +43,14 @@ public class Worker implements IChatActivity, IConnectActivity, ISimplifiedConne
 		if(a != null)
 		{
 			a.appendText(message);
+			a.scrollDown();
 		}
+	}
+	
+	private void logout()
+	{
+		client.logout();
+		client.disconnect();
 	}
 	
 	@SuppressLint("SimpleDateFormat")
@@ -50,7 +66,6 @@ public class Worker implements IChatActivity, IConnectActivity, ISimplifiedConne
 		Manager.getInstance().removeChatActivity();
 		Manager.getInstance().setConnected(false);
 		client.disconnect();
-		client = null;
 	}
 
 	@Override
@@ -72,7 +87,7 @@ public class Worker implements IChatActivity, IConnectActivity, ISimplifiedConne
 		ConnectActivity a = Manager.getInstance().getConnectActivity();
 		if(a != null)
 		{
-			Toast.makeText(a, message, Toast.LENGTH_LONG).show();
+			a.showToast(message);
 			return;
 		}
 		String line = timestamp()+" ERROR "+sender+": "+message+"\n";
@@ -110,7 +125,12 @@ public class Worker implements IChatActivity, IConnectActivity, ISimplifiedConne
 		ServerInfo sinfo = new ServerInfo(a.et_srv_name.getText().toString(), a.et_usr_name.getText().toString(), a.et_srv_pass.getText().toString());
 		String delim = a.et_proto_se.getText().toString();
 		sinfo.delimiter = delim.equalsIgnoreCase("") ? "::" : delim;
-		client = new SimplifiedChatsimpleClient(sinfo, this);
+		client.setServerInfo(sinfo);
+		
+		if(client.isConnected())
+		{
+			client.disconnect();
+		}
 		
 		SharedPreferences settings = a.getPreferences(Context.MODE_PRIVATE);
     	SharedPreferences.Editor editor = settings.edit();
@@ -124,13 +144,9 @@ public class Worker implements IChatActivity, IConnectActivity, ISimplifiedConne
 	}
 
 	@Override
-	public void e_connected(ConnectActivity a) {
-		Toast.makeText(a, a.getString(R.string.conn_toast_conn_ok), Toast.LENGTH_SHORT).show();
-		if(client.login())
-		{
-			Intent intent = new Intent(a, ChatActivity.class);
-			a.startActivity(intent);
-		}
+	public void e_loggedin(ConnectActivity a) {
+		Intent intent = new Intent(a, ChatActivity.class);
+		a.startActivity(intent);
 		Manager.getInstance().setConnected(true);
 	}
 	
@@ -139,5 +155,29 @@ public class Worker implements IChatActivity, IConnectActivity, ISimplifiedConne
 	{
 		client.sendChatMessage(a.et_message.getText().toString());
 		a.et_message.setText("");
+	}
+	
+	@Override
+	public void e_disconnect(ChatActivity activity)
+	{
+		logout();
+		Manager.getInstance().removeChatActivity();
+		Manager.getInstance().setConnected(false);
+		Manager.getInstance().newConnectActivity(activity);
+	}
+	
+	@Override
+	public void e_exit(ChatActivity activity)
+	{
+		logout();
+		Manager.getInstance().removeChatActivity();
+		Manager.getInstance().setConnected(false);
+		System.exit(0);
+	}
+	
+	@Override
+	public void e_exit(ConnectActivity activity)
+	{
+		System.exit(0);
 	}
 }

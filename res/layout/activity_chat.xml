@@ -2,14 +2,18 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/tv_messages"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:scrollbars="vertical"
-        android:layout_weight="1"/>
-
+	<ScrollView
+	    android:id="@+id/sv_textscroller"
+	    android:layout_weight="1"
+	    android:scrollbars="vertical"
+	    android:layout_width="match_parent"
+	    android:layout_height="0dp">
+		<TextView
+    	    android:id="@+id/tv_messages"
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:scrollbars="none"/>
+	</ScrollView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
@@ -22,7 +26,7 @@
         	android:lines="1"
         	android:singleLine="true"
         	android:imeActionId="1"
-        	android:imeOptions="actionDone|actionNext"
+        	android:imeOptions="actionSend"
         />
        <Button android:id="@+id/btn_send"
            android:layout_width="wrap_content"

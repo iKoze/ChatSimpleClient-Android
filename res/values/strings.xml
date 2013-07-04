@@ -11,11 +11,15 @@
     <string name="conn_et_proto_sep">Protokoll-Trenner</string>
     <string name="conn_btn_connect">Verbinden</string>
     <string name="conn_dialog_connect">Verbindung wird hergestellt</string>
+    <string name="conn_dialog_logging_in">Einloggen</string>
     <string name="conn_toast_conn_failed">Verbindung fehlgeschlagen</string>
+    <string name="conn_toast_login_failed">Login fehlgeschlagen</string>
     <string name="conn_toast_conn_ok">Verbindung hergestellt</string>
     <string name="title_activity_chat">ChatActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="chat_et_message">Deine Nachricht</string>
     <string name="chat_btn_send">Senden</string>
+    <string name="action_disconnect">Verbindung trennen</string>
+	<string name="action_exit">Beenden</string>
 
 </resources>

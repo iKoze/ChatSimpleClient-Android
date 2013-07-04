@@ -38,7 +38,7 @@
         android:id="@+id/btn_connect"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:onClick="connect"
+        android:onClick="e_connect"
         android:text="@string/conn_btn_connect" />
 
 </LinearLayout>

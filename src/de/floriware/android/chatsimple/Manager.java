@@ -5,6 +5,7 @@ import android.content.Intent;
 import de.floriware.android.chatsimple.activities.ChatActivity;
 import de.floriware.android.chatsimple.activities.ConnectActivity;
 import de.floriware.android.chatsimple.services.ChatService;
+import de.floriware.chatsimple.ServerInfo;
 
 public class Manager
 {
@@ -14,6 +15,7 @@ public class Manager
 	private ChatActivity chatactivity = null;
 	private Worker worker = null;
 	private boolean connected = false;
+	private boolean chat_visible = false;
 	
 	private Manager()
 	{
@@ -36,7 +38,17 @@ public class Manager
 	
 	public void setConnected(boolean connected)
 	{
-		this.connected = connected; 
+		this.connected = connected;
+	}
+	
+	public boolean isConnected()
+	{
+		return connected;
+	}
+	
+	public void setChatVisible(boolean visible)
+	{
+		chat_visible = visible;
 	}
 	
 	public boolean setChatService(ChatService service)
@@ -59,10 +71,26 @@ public class Manager
 		endActivity(connectactivity);
 		if(connected)
 		{
-			Intent intent = new Intent(activity, ChatActivity.class);
-			activity.startActivity(intent);
+			if(chatactivity == null)
+			{
+				Intent intent = new Intent(activity, ChatActivity.class);
+				activity.startActivity(intent);
+			}
+			else
+			{
+				Intent intent = new Intent(chatactivity, ChatActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+				activity.startActivity(intent);
+			}
 		}
 		connectactivity = activity;
+	}
+	
+	public void newConnectActivity(ChatActivity activity)
+	{
+		Intent intent = new Intent(activity, ConnectActivity.class);
+		activity.startActivity(intent);
+		endActivity(activity);
 	}
 	
 	public ConnectActivity getConnectActivity()
@@ -76,6 +104,8 @@ public class Manager
 		endActivity(connectactivity);
 		connectactivity = null;
 		chatactivity = activity;
+		ServerInfo i = worker.getClient().getServerInfo();
+		chatactivity.setTitle("ChatSimple: "+i.username+"@"+i.getHost());
 		chatactivity.appendText(worker.getChatHistory());
 	}
 	
@@ -86,8 +116,11 @@ public class Manager
 	
 	public void removeChatActivity()
 	{
-		chatactivity.finish();
-		chatactivity = null;
+		if(chatactivity != null)
+		{
+			chatactivity.finish();
+			chatactivity = null;
+		}
 	}
 	
 	private void endActivity(Activity a)
