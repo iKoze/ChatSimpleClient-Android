@@ -99,6 +99,7 @@ public class Worker implements IChatActivity, IConnectActivity, ISimplifiedConne
 	{
 		String line = timestamp()+" NOTIFY "+sender+": "+message+"\n";
 		chatUpdate(line);
+		client.requestUserList();
 	}
 
 	@Override
@@ -108,9 +109,10 @@ public class Worker implements IChatActivity, IConnectActivity, ISimplifiedConne
 	}
 
 	@Override
-	public void incomingUserList(String[] arg0) {
-		// TODO Auto-generated method stub
-		
+	public void incomingUserList(String[] arg0)
+	{
+		String line = timestamp()+" Online Users: "+StringJoin.join(", ",arg0)+"\n";
+		chatUpdate(line);
 	}
 
 	@Override
@@ -153,7 +155,37 @@ public class Worker implements IChatActivity, IConnectActivity, ISimplifiedConne
 	@Override
 	public void e_send(ChatActivity a)
 	{
-		client.sendChatMessage(a.et_message.getText().toString());
+		String s = a.et_message.getText().toString();
+		if(s.startsWith("/"))
+		{
+			s = s.replaceFirst("/", "");
+			if(s.startsWith("list"))
+			{
+				client.requestUserList();
+			}
+			else if(s.startsWith("tell "))
+			{
+				s = s.replaceFirst("tell ", "");
+				String [] data = s.split(" ",2);
+				try
+				{
+					String [] receiver = data[0].split(",");
+					client.sendTellMessage(receiver, data[1]);
+				}
+				catch(ArrayIndexOutOfBoundsException e)
+				{
+					chatUpdate("Usage: /tell user1,user2 your message\n");
+				}
+			}
+			else
+			{
+				chatUpdate("Unknown Command: "+s+"\n");
+			}
+		}
+		else
+		{
+			client.sendChatMessage(s);
+		}
 		a.et_message.setText("");
 	}
 	
